@@ -28,13 +28,9 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         $this->getDocument()->fillField($field, $value);
     }
 
-    public function uploadImage(string $image): void
+    public function chooseImage(string $code): void
     {
-        $path = __DIR__ . '/../../../Resources/images/' . $image;
-
-        Assert::fileExists($path);
-
-        $this->getDocument()->attachFileToField('Choose file', realpath($path));
+        $this->getElement('image')->setValue($code);
     }
 
     public function fillCode(string $code): void
@@ -99,6 +95,7 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
             'slug' => '#bitbag_sylius_cms_plugin_page_translations_en_US_slug',
             'association_dropdown_section' => '.field > label:contains("Sections") ~ .sylius-autocomplete',
             'association_dropdown_section_item' => '.field > label:contains("Sections") ~ .sylius-autocomplete > div.menu > div.item:contains("%item%")',
+            'image' => '#bitbag_sylius_cms_plugin_page_translations_en_US_image',
         ]);
     }
 }

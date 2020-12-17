@@ -13,9 +13,7 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusCmsPlugin\Behat\Page\Admin\Page;
 
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
-use Tests\BitBag\SyliusCmsPlugin\Behat\Service\WysiwygHelper;
 use Tests\BitBag\SyliusCmsPlugin\Behat\Behaviour\ChecksCodeImmutabilityTrait;
-use Webmozart\Assert\Assert;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
@@ -26,12 +24,15 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         $this->getDocument()->fillField($field, $value);
     }
 
-    public function uploadImage(string $image): void
+    public function chooseImage(string $code): void
     {
-        $path = __DIR__ . '/../../../Resources/images/' . $image;
+        $this->getElement('image')->setValue($code);
+    }
 
-        Assert::fileExists($path);
-
-        $this->getDocument()->attachFileToField('Choose file', $path);
+    protected function getDefinedElements(): array
+    {
+        return array_merge(parent::getDefinedElements(), [
+            'image' => '#bitbag_sylius_cms_plugin_page_translations_en_US_image',
+        ]);
     }
 }
