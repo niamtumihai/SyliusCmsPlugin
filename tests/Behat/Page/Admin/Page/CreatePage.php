@@ -30,7 +30,13 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
 
     public function chooseImage(string $code): void
     {
-        $this->getElement('image')->setValue($code);
+        $field = $this->getElement('image');
+
+        $this->getSession()->executeScript(
+            "document.getElementById('bitbag_sylius_cms_plugin_page_translations_en_US_image').setAttribute('type', 'text');",
+        );
+
+        $field->setValue($code);
     }
 
     public function fillCode(string $code): void
